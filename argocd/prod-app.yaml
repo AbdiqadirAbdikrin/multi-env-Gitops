@@ -1,13 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
 metadata:
   name: myapp-prod
+  namespace: argocd
 
 spec:
-  destination: 
-    namespace: prod
+  project: default
 
   source:
+    repoURL: https://github.com/AbdiqadirAbdikrin/multi-env-Gitops
+    targetRevision: main
+    path: myapp
+
     helm:
       valueFiles:
-      - ../../environments/prod.yaml
+        - ../env/prod-values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
