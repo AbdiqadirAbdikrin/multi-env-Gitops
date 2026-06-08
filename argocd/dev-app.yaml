@@ -1,13 +1,29 @@
+# argocd/dev-app.yaml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
 metadata:
   name: myapp-dev
+  namespace: argocd
+
 spec:
-  destination:
-    namespace: dev
+  project: default
 
   source:
-    path: helm/myapp
+    repoURL: https://github.com/AbdiqadirAbdikrin/multi-env-Gitops
+    targetRevision: main
+    path: myapp
+
     helm:
       valueFiles:
-      - ../../environments/dev.yaml
+        - ../env/dev-values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
