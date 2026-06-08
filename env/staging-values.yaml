@@ -1,0 +1,7 @@
+replicaCount: 2
+
+image:
+  tag: ""
+
+ingress:
+  host: staging.myapp.local

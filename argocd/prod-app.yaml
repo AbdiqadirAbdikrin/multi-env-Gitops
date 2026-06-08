@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-prod
+
+spec:
+  destination: 
+    namespace: prod
+
+  source:
+    helm:
+      valueFiles:
+      - ../../environments/prod.yaml

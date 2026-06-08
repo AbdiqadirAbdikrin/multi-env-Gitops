@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-dev
+spec:
+  destination:
+    namespace: dev
+
+  source:
+    path: helm/myapp
+    helm:
+      valueFiles:
+      - ../../environments/dev.yaml
